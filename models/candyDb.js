@@ -31,7 +31,7 @@ const CandyStore = sequelize.define("candy", {
   },
 
   quantity: {
-    type: Sequelize.STRING,
+    type: Sequelize.DOUBLE,
     allowNull: false,
   },
 });

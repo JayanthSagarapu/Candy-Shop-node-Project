@@ -38,7 +38,7 @@ async function addItem(e) {
   if (name && description && price && quantity) {
     try {
       const response = await axios.post(
-        "http://localhost:5000/items/addItem",
+        "http://localhost:5000/items/createItem",
         Item
       );
       showOnScreen(response.data);
@@ -67,10 +67,10 @@ async function showOnScreen(res) {
   li.id = "list-item";
 
   //creating error
-  //   const errmsg = document.createElement("div");
-  //   errmsg.className = "bg-danger w-75 d-none text-white";
-  //   errmsg.textContent = "Required Quantity Not Available";
-  //   list.append(errmsg);
+  const errmsg = document.createElement("div");
+  errmsg.className = "bg-danger w-75 d-none text-white";
+  errmsg.textContent = "Required Quantity Not Available";
+  list.append(errmsg);
 
   const div0 = document.createElement("div");
   div0.className = "card card-body";
@@ -104,6 +104,7 @@ async function showOnScreen(res) {
   li.append(buybtn1);
 
   buybtn1.onclick = async () => {
+    console.log(res.name);
     var value = 1;
     if (res.quantity >= value) {
       res.quantity = res.quantity - 1;
@@ -158,9 +159,8 @@ async function showOnScreen(res) {
         price: res.price,
         quantity: res.quantity,
       };
-      console.log(updatedItem);
       try {
-        const res = await axios.put(
+        await axios.put(
           `http://localhost:5000/updateItem/${res.id}`,
           updatedItem
         );
@@ -171,7 +171,7 @@ async function showOnScreen(res) {
     } else {
       try {
         list.removeChild(li);
-        const res = await axios.delete(
+        const response = await axios.delete(
           `http://localhost:5000/deleteItem/${res.id}`
         );
       } catch (err) {
@@ -184,5 +184,3 @@ async function showOnScreen(res) {
 
   form.reset();
 }
-
-//page reload but data will not delete

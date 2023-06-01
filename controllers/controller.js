@@ -2,7 +2,7 @@ const path = require("path");
 
 const { sequelize, CandyStore } = require("../models/candyDb");
 
-exports.addItem = async (req, res) => {
+exports.createItem = async (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
   const price = req.body.price;
@@ -19,25 +19,17 @@ exports.addItem = async (req, res) => {
 
 exports.getItems = async (req, res) => {
   const items = await CandyStore.findAll();
+  // console.log(items);
   res.send(items);
 };
 
 exports.updateItem = async (req, res) => {
   const prodId = req.params.id;
-  const name = req.body.name;
-  const description = req.body.description;
-  const price = req.body.price;
-  const quantity = req.body.quantity;
 
-  const upadatedItem = await CandyStore.update({
-    name: name,
-    description: description,
-    price: price,
-    quantity: quantity,
+  const updatedItem = await CandyStore.update(req.body, {
     where: { id: prodId },
   });
-
-  res.send(upadatedItem);
+  res.send(updatedItem);
 };
 
 exports.deleteItem = async (req, res) => {

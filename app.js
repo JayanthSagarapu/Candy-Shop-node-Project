@@ -12,6 +12,6 @@ app.use("/", routes);
 
 sequelize.sync().then(
   app.listen(port, () => {
-    console.log("running");
+    console.log("running app");
   })
 );
